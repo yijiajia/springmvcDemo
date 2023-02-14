@@ -1,0 +1,15 @@
+1. DataSourceConfig.java 中的@Value属性注入失败。
+关键错误：Cannot enhance @Configuration bean definition 'dataSourceConfig' since its singleton instance has been created too early. The typical cause is a non-static @Bean method with a BeanDefinitionRegistryPostProcessor return type: Consider declaring such methods as 'static'.
+解决方案：
+    https://www.codeleading.com/article/28173762486/
+* 大意是 MapperScannerConfigurer 是 BeanFactoryPostProcessor 的一个实现，如果配置类中出现 BeanFactoryPostProcessor ，会破坏默认的 post-processing 。
+* 最简单的解决方式是使用 @MapperScan 注解代替 MapperScannerConfigurer 的 bean 配置。
+
+
+2. InvalidDataAccessApiUsageException: Error attempting to get column 'createTime' from result set.  Cause: java.sql.SQLFeatureNotSupportedException
+
+LocalDateTime时间转换错误。
+
+druid包是旧包，在pom.xml中依赖是1.2.8，是支持LocalDateTime的，但在web的依赖中，/target/springMvcDemo/WEB-INF/lib/ 却是druid-1.1.14的旧包
+
+解决办法：更新target下包，使用maven的clean插件清除

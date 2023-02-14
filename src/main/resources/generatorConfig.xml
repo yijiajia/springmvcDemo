@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <properties resource="db.properties"/>
+
+    <!-- 数据库驱动 -->
+<!--    <classPathEntry location="D:\environment\maven\apache-maven-3.8.1\repository\mysql\mysql-connector-java\5.1.35\mysql-connector-java-5.1.35.jar"/>-->
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+
+        <commentGenerator>
+            <!--  不生成所有注释，默认为 false  -->
+            <property name="suppressAllComments" value="true"/>
+
+            <!--  生成的注释中不包含时间信息，默认为 false -->
+            <property name="suppressDate" value="true"/>
+            <!--  生成的注释中，时间的显示格式 -->
+            <property name="dateFormat" value="yyyy/MM/dd"/>
+            <!-- 是否添加数据库表中字段的注释，默认为 false  -->
+            <property name="addRemarkComments" value="true"/>
+        </commentGenerator>
+
+        <!-- 数据库连接 -->
+        <jdbcConnection driverClass="${jdbc_driver}"
+                        connectionURL="${jdbc_url}"
+                        userId="${jdbc_username}"
+                        password="${jdbc_password}">
+        </jdbcConnection>
+
+        <!-- 非必须，类型处理器，在数据库类型和java类型之间的转换控制 -->
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+            <property name="useJSR310Types" value="true"/>
+        </javaTypeResolver>
+
+        <!-- Entity Java Class -->
+        <javaModelGenerator targetPackage="com.example.model" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!-- Mapper Java Class -->
+        <sqlMapGenerator targetPackage="mapper"  targetProject="src/main/resources">
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>
+
+        <!-- Mapper XML File -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.example.mapper"  targetProject="src/main/java">
+            <property name="enableSubPackages" value="false" />
+        </javaClientGenerator>
+
+        <!-- 需要生成的数据库表 -->
+        <table schema="test" tableName="teacher" domainObjectName="Teacher"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false">
+        </table>
+
+    </context>
+</generatorConfiguration>
